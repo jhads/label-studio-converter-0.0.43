@@ -233,7 +233,7 @@ class Converter(object):
             for item in item_iterator(input_data):
                 tokens, tags = create_tokens_and_tags(
                     text=item['input'][data_key],
-                    spans=next(iter(item['output'].values()))
+                    spans=next(iter(item['output'].values())) if len(item['output'].values()) else []
                 )
                 for token, tag in zip(tokens, tags):
                     fout.write('{token} -X- _ {tag}\n'.format(token=token, tag=tag))
