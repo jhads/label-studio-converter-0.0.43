@@ -1,3 +1,32 @@
+# Label Studio Converter Fork
+
+## Fork Purpose
+This repository is a fork of the now-archived [Label Studio Converter](https://github.com/HumanSignal/label-studio-converter), which was merged into the [Label Studio SDK](https://github.com/HumanSignal/label-studio-sdk/tree/master/src/label_studio_sdk/converter).
+
+## Why This Fork?
+- **Dependency Management**: The `label-parser` project relies on this package. To ensure compatibility and prevent disruptions due to the repository's archival, we forked it to retain availability and control.
+- **Extensibility**: This fork allows us to introduce fixes or enhancements, such as the patch for supporting null spans.
+- **Version Control**: We maintain this fork to track specific versions (`0.0.43` in this case, specifically commit 9efe8eea10c413eb37784e3758c5df11da9d1da1) used in `label-parser`.
+
+## Changes in This Fork
+- **Allow Null Spans**: Applied a patch to handle cases where spans are null or empty.
+
+### Patch:
+```diff
+@@ -239,7 +239,7 @@ class Converter(object):
+             for item in item_iterator(input_data):
+                 tokens, tags = create_tokens_and_tags(
+                     text=item['input'][data_key],
+-                    spans=next(iter(item['output'].values()))
++                    spans=next(iter(item['output'].values())) if len(item['output'].values()) else []
+                 )
+                 for token, tag in zip(tokens, tags):
+                     fout.write('{token} -X- _ {tag}\n'.format(token=token, tag=tag))
+```
+- **Bump requests**: minimum version to 2.31.0 for compatibility with pyartparse requests version
+
+<br><br><br>
+
 # Label Studio Converter
 
 [Website](https://labelstud.io/) • [Docs](https://labelstud.io/guide) • [Twitter](https://twitter.com/heartexlabs) • [Join Slack Community <img src="https://go.heartex.net/docs/images/slack-mini.png" width="18px"/>](https://docs.google.com/forms/d/e/1FAIpQLSdLHZx5EeT1J350JPwnY2xLanfmvplJi6VZk65C2R4XSsRBHg/viewform?usp=sf_link)
